@@ -52,7 +52,7 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 574, 399);
+		frame.setBounds(100, 100, 583, 423);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -72,7 +72,7 @@ public class GUI {
 		frame.getContentPane().add(passwordLabel);
 		
 		password = new JPasswordField();
-		password.setBounds(189, 185, 208, 29);
+		password.setBounds(189, 185, 208, 31);
 		frame.getContentPane().add(password);
 		
 		JButton loginButton = new JButton("Login");
@@ -86,6 +86,11 @@ public class GUI {
 		frame.getContentPane().add(loginButton);
 		
 		JButton signUpButton = new JButton("Sign up");
+		signUpButton.addActionListener(new ActionListener() { //action listener Signup
+			public void actionPerformed(ActionEvent e) {
+				SignUpButtonAction();
+			}
+		});
 		signUpButton.setBounds(311, 243, 110, 39);
 		frame.getContentPane().add(signUpButton);
 		
@@ -95,6 +100,14 @@ public class GUI {
 		frame.getContentPane().add(loginStatusLable);
 	}
 	
+	void SignUpButtonAction() {
+		// TODO Auto-generated method stub
+		
+		frame.setVisible(false);
+		SignUpView signUpView = new SignUpView();
+		signUpView.main2(null);
+	}
+
 	@SuppressWarnings("deprecation")
 	public void LoginButtonAction() {
 		if (controller.CheckAcccount(usernameText.getText(), password.getText())) {

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.HashMap;
@@ -15,7 +16,8 @@ public class DataController {
 	static HashMap<String, String> slangMap;
 	
 	public DataController() {
-		slangMap = GetSlangMap("data.txt");
+		slangMap = new HashMap<String, String>();
+		GetSlangMap("data.txt");
 		
 	}
 	
@@ -25,8 +27,7 @@ public class DataController {
 		return true;
 	}
 	
-	public static HashMap<String, String> GetSlangMap(String url) {
-        HashMap<String, String> slangMap = new HashMap<String, String>();
+	public static void GetSlangMap(String url) {
 		try{
             File file = new File(url);
             FileReader fr = new FileReader(file);
@@ -57,13 +58,38 @@ public class DataController {
                                     .log(Level.SEVERE, null, ex);
                 }
             }
-
-            return slangMap;
+            
         } catch(Exception e){
             System.out.println("Error: " + e);
         }
-		
-        return slangMap;
     }
+	
+	public static void Append_to_file(String s, String url) {
+        try {
+            File file = new File(url);
+            FileWriter fr = new FileWriter(file, true);
+
+            try {
+                fr.write(s);
+            } catch (Exception e) {
+                System.out.println("cant write file");
+            }finally{
+                fr.close();
+            }
+        }catch(Exception e){
+            System.out.println("cant open file");
+        }
+    }
+	
+    public static int Add_slang_word(String slang_key, String def_value) {
+	    if(slangMap.containsKey(slang_key)){
+	        return 1;
+	    }else{
+	        slangMap.put(slang_key, def_value);
+	        Append_to_file(slang_key + "`" + def_value + "\n", "data.txt");
+	        System.out.println("!!! Add new slangword successfully !!!");
+	        return 0;
+	    }
+    }	
 }
 
